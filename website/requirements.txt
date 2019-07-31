@@ -1,0 +1,9 @@
+flask
+Flask
+gunicorn
+numpy
+requests
+vaderSentiment
+nltk
+textblob
+sklearn

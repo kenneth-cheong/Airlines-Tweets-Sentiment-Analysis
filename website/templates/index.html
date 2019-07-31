@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+
+    <!-- Site Metas -->
+    <title>Airlines Sentiment Analysis and Classification</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/icon.ico') }}" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}" >
+
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static', filename='styles/bootstrap.min.css') }}" rel='stylesheet' type='text/css' />
+    <!-- Site CSS -->
+    <link href="{{ url_for('static', filename='styles/style.css') }}" rel='stylesheet' type='text/css' />
+    <!-- Responsive CSS -->
+    <link href="{{ url_for('static', filename='styles/responsive.css') }}" rel='stylesheet' type='text/css' / >
+    <!-- color -->
+    <link href="{{ url_for('static', filename='styles/colors/orange.css') }}" rel='stylesheet' type='text/css' / >
+    <!-- tweet feed -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/twitterfeed-fade.js') }}" ></script>
+    <link href="{{ url_for('static', filename='styles/twitter-styles-fade.css') }}"  rel="stylesheet" type="text/css" />
+    <!-- Modernizer -->
+    <script src="{{ url_for('static', filename='js/modernizer.js') }}"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div id="loader">
+        <div id="status"></div>
+    </div>
+    <div id="site-header">
+        <header id="header" class="header-block-top">
+            <div class="container">
+                <div class="row">
+                    <div class="main-menu">
+                        <!-- navbar -->
+                        <nav class="navbar navbar-default" id="mainNav">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <div class="logo">
+                                    <a class="navbar-brand js-scroll-trigger logo-header" hre f="#">
+                                        <img src="{{ url_for('static', filename='images/logo.png') }}">
+                                    </a>
+                                </div>
+                            </div>
+                            <div id="navbar" class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="active"><a href="#banner">Top</a></li>
+                                    <li><a href="#background">Background</a></li>
+                                    <li><a href="#statement">Problem Statement</a></li>
+                                    <li><a href="#data">Data</a></li>
+                                    <li><a href="#methodology">Methodology</a></li>
+                                    <li><a href="#insights">Insights</a></li>
+                                    <li><a href="#recommendations">Recommendations</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                </ul>
+                            </div>
+                            <!-- end nav-collapse -->
+                        </nav>
+                        <!-- end navbar -->
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container-fluid -->
+        </header>
+        <!-- end header -->
+    </div>
+	<!-- end site-header -->
+	
+    <div id="banner" class="banner full-screen-mode parallax">
+        <div class="container pr">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="banner-static">
+                    <div class="banner-text">
+                        <div class="banner-cell">
+                            <h1>#UnitedAirlines: <br> <span class="typer" id="some-id" data-delay="50" data-delim=":" data-words="Great Service!:Delayed!:Where's my bag?" data-colors="red"></span><span class="cursor" data-cursorDisplay="_" data-owner="some-id"></span></h1><br>
+                            <h2>Sentiment Anaylsis </h2>
+                            <p>A deeper look into Tweets</p>
+                            <div class="book-btn">
+                                <a class="table-btn hvr-underline-from-center">Try the Tweet Classifier!</a><br>
+                                                                <form action="{{ url_for('main')}}"method="post">
+                                <textarea name="user_input_tweet" wrap="hard" placeholder="Enter Tweet here.." required></textarea>
+                                <br>
+                                <b><button type="submit" style="width: 300px; height: 50px; font-size : 18px;">Classify my Tweet</button></b>
+                                </form>
+<br>
+                                <c>{{ input_text }}</c><br><d>{{ prediction_text }}</d><br><e>{{ vader_score }}<br>{{ textblob }}</e>
+                            </div>
+                        </div>
+                        <!-- end banner-cell -->
+                    </div>
+                    <!-- end banner-text -->
+                </div>
+                <!-- end banner-static -->
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end banner -->
+    <a href="#background"></a>
+    <div id="background" class="about-main pad-top-70 pad-bottom-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title"> Background </h2>
+                        <p> Since the founding of the first commercial airlines in 1909, humanity have come a long way in mass air transportation. With the emergence of multiple carriers serving similar routes, there has been an increasing need to differentiate and market each airline from its competitors. The paramount aspect of customer satisfaction is one such way. Social media has a growing influence on our purchase decision and should be taken into account by airlines management.<br><br> The analysis of Tweets is one such way to measure customer sentiment.</p><br>
+                    </div>
+                </div>
+                <!-- end col -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <div class="about-images">
+                            <img class="about-main" src="{{ url_for('static', filename='images/about-main.png') }}">
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+
+    <div div id="statement" class="special-menu pad-top-100 parallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title color-white text-center"> Problem Statement </h2>
+                        <h5 class="title-caption text-center"> To provide recommendations on specified areas of improvement for United Airlines based on passenger comments. </h5>
+                    </div>
+                    <div class="special-box">
+                        <div id="owl-demo">
+                            <div class="item item-type-zoom">
+                                <div class="item-img">
+                                    <img src="{{ url_for('static', filename='images/statement1.gif') }}">
+                                </div>
+                            </div>
+                            <div class="item item-type-zoom">
+                                <div class="item-img">
+                                    <img src="{{ url_for('static', filename='images/statement2.gif') }}">
+                                </div>
+                            </div>
+                            <div class="item item-type-zoom">
+                                <div class="item-img">
+                                    <img src="{{ url_for('static', filename='images/statement3.gif') }}">
+                                </div>
+                            </div>
+                            <div class="item item-type-zoom">
+                                <div class="item-img">
+                                    <img src="{{ url_for('static', filename='images/statement4.gif') }}">
+                                </div>
+                            </div>
+                            <div class="item item-type-zoom">
+                                <div class="item-img">
+                                    <img src="{{ url_for('static', filename='images/statement5.gif') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end special-box -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end special-menu -->
+    <div id="data" class="menu-main pad-top-100 pad-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title text-center">
+						Data	
+					</h2>
+                        <p class="title-caption text-center">These are the data sources for this project.</p>
+                    </div>
+                        <div class="slider slider-single">
+                            <div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                    <div class="offer-item">
+                                        <img src="{{ url_for('static', filename='images/twitter.gif') }}" class="img-responsive">
+                                        <div>
+                                            <h3>Twitter</h3>
+                                            <p>
+                                                Tweets containing 'United Airlines' were scraped using Twython from Twitter. 
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                    <div class="offer-item">
+                                        <img src="{{ url_for('static', filename='images/kaggle.gif') }}" class="img-responsive">
+                                        <div>
+                                            <h3>Kaggle</h3>
+                                            <p>
+                                                A Kaggle dataset on US Airlines Sentiment was used. Only tweets about United Airlines were filtered.<br><br><a href="https://www.kaggle.com/crowdflower/twitter-airline-sentiment" target="_blank">Link to Kaggle dataset</a>
+                                            </p>
+                                        </div
+                                    </div>
+                                </div>
+                                <!-- end col -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end tab-menu -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    <!-- end menu -->
+
+    <div id="methodology" class="team-main pad-top-100 pad-bottom-100 parallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title text-center">
+						Methodology 	
+					</h2>
+                        <p class="title-white text-center">These are the steps undertaken to evaluate the tweets.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6">
+                                <div class="sf-team">
+                                    <div class="thumb">
+                                        <a><img src="{{ url_for('static', filename='images/cleaning.gif') }}" alt=""></a>
+                                    </div>
+                                    <div class="text-col">
+                                        <h3>Cleaning</h3>
+                                        <p>After extracting the tweets using from the data sources, unnecessary text such as repeated tweets, '@' and '#' tags, urls, punctuation were removed and the remaining was changed to lower case.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="sf-team">
+                                    <div class="thumb">
+                                        <a><img src="{{ url_for('static', filename='images/sentiment.gif') }}" alt=""></a>
+                                    </div>
+                                    <div class="text-col">
+                                        <h3>Sentiment Analysis</h3>
+                                        <p>VADER was first used to evaluate the tweets prior to removing punctuation and changing them to lower case. Subsequently, TextBlob was used to evaluate the sentiments after further cleaning was done.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="sf-team">
+                                    <div class="thumb">
+                                        <a><img src="{{ url_for('static', filename='images/classification.gif') }}" alt=""></a>
+                                    </div>
+                                    <div class="text-col">
+                                        <h3>Classification</h3>
+                                        <p>LDA and Doc2Vec methods were first used but clear topics could not be identified. A second approach of checking for keywords in identified topics was used to label 3,322 tweets.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end team-box -->
+    
+    <div id="insights" class="gallery-main pad-top-100 pad-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title text-center">
+						Insights	
+					</h2>
+                        <p class="title-caption text-center">Below are the visualizations created after analysing the data.</p>
+                    </div>
+                    <div class="gal-container clearfix">
+                        <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#1">
+                                    <img src="{{ url_for('static', filename='images/keywords_train.png') }}">
+                                </a>
+                                <div class="modal fade" id="1" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{{ url_for('static', filename='images/keywords_train.png') }}" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>Keywords based on training set</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#2">
+                                    <img src="{{ url_for('static', filename='images/keywords_test.png') }}">
+                                </a>
+                                <div class="modal fade" id="2" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{{ url_for('static', filename='images/keywords_test.png') }}" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>Keywords based on predicted set</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#3">
+                                    <img src="{{ url_for('static', filename='images/word_cloud.png') }}">
+                                </a>
+                                <div class="modal fade" id="3" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{{ url_for('static', filename='images/word_cloud.png') }}">
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>WordCloud from Tweets</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- end gal-container -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end gallery-main -->
+
+    <div id="recommendations" class="blog-main pad-top-100 pad-bottom-100 parallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h2 class="block-title text-center">
+					Recommendations	
+				</h2>
+                    <div class="blog-box clearfix">
+                        <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="blog-block">
+                                    <div class="blog-img-box">
+                                        <img src="images/featured-image-01.jpg" alt="" />
+                                        <div class="overlay">
+                                            <a href=""><i class="fa fa-link" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="blog-dit">
+                                        <h2>Manage passenger expectations during delays</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="blog-block">
+                                    <div class="blog-img-box">
+                                        <img src="images/featured-image-02.jpg" alt="" />
+                                        <div class="overlay">
+                                            <a href=""><i class="fa fa-link" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="blog-dit">
+                                        <h2>Always respond quickly to passenger tweets and follow-up!</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="blog-block">
+                                    <div class="blog-img-box">
+                                        <img src="images/featured-image-03.jpg" alt="" />
+                                        <div class="overlay">
+                                            <a href=""><i class="fa fa-link" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="blog-dit">
+                                        <h2>Educate staff on the pivotal role social media plays in customer service</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="blog-block">
+                                    <div class="blog-img-box">
+                                        <img src="images/featured-image-04.jpg" alt="" />
+                                        <div class="overlay">
+                                            <a href=""><i class="fa fa-link" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="blog-dit">
+                                        <h2>Take ownership of customer problems!</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                    </div>
+                    <!-- end blog-box -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end blog-main -->
+    
+<a href="#live_tweets">
+        <div id="insights" class="gallery-main pad-top-100 pad-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title text-center">Live Tweets	</h2>
+                            <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+                                <div class="elfsight-app-d893dd3b-4e4d-4124-bb42-66745ab234be"></div>  
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+                                    
+    <div id="contact" class="footer-main">
+        <div class="footer-news pad-top-100 pad-bottom-70 parallax">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                            <h2 class="ft-title color-white text-center"> Connect with me! </h2>
+                            <p> Email me at the  email addresss below to connect.</p>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end footer-news -->
+        <div class="footer-box pad-top-70">
+            <div class="container">
+                <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-box-a">
+                                <h3>About Me</h3>
+                                <p>Let's go social</p>
+                                <ul class="socials-box footer-socials pull-left">
+                                    <li>
+                                        <a href="https://www.facebook.com/kenneth.cheong.56" target="_blank">
+                                            <div class="social-circle-border"><i class="fa  fa-facebook"></i></div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.linkedin.com/in/kenneth-cheong-jw/" target="_blank">
+                                            <div class="social-circle-border"><i class="fa fa-linkedin"></i></div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/kenneth-cheong" target="_blank"><img src="{{ url_for('static', filename='images/github.gif') }}" width="20" height=27>
+                                            <div class="social-circle-border"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <!-- end footer-box-a -->
+                        </div>
+                        <!-- end col -->
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-box-c">
+                                <h3>Contact Me</h3>
+                                <p>
+                                    <i class="fa fa-mobile" aria-hidden="true"></i>
+                                    <span>
+									+65 9366 5477 
+								</span>
+                                </p>
+                                <p>
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span><a href="mailto:clarinet.kenneth@gmail.com">clarinet.kenneth@gmail.com</a></span>
+                                </p><br><br>
+                            </div>
+                            <!-- end footer-box-c -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end footer-in-main -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end footer-box -->
+    <!-- end footer-main -->
+    <!-- ALL JS FILES -->
+    <script src="{{ url_for('static', filename='js/all.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- ALL PLUGINS -->
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+</body>
+
+</html>

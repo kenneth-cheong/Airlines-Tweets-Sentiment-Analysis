@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html >
+    
+<!-- Bootstrap CSS -->
+    <link href="{{ url_for('static', filename='styles/bootstrap.min.css') }}" rel='stylesheet' type='text/css' />
+    <!-- Site CSS -->
+    <link href="{{ url_for('static', filename='styles/style.css') }}" rel='stylesheet' type='text/css' />
+    <!-- Responsive CSS -->
+    <link href="{{ url_for('static', filename='styles/responsive.css') }}" rel='stylesheet' type='text/css' / >
+    <!-- color -->
+    <link href="{{ url_for('static', filename='styles/colors/orange.css') }}" rel='stylesheet' type='text/css' / >
+
+<form action="{{ url_for('tweet')}}"method="post">
+<textarea rows="4" cols="50" name="user_input_tweet" wrap="hard" placeholder="Enter Tweet here.." style="font-size: 13pt">
+</textarea>
+    <br>
+        <button type="submit" class="btn btn-primary btn-block btn-large" style="width: 472px; height: 50px; font-size : 18px;">Classify my Tweet!</button>
+</form>
+
+<br>
+    <div id="contact" class="footer-main">
+        <div class="footer-news pad-top-100 pad-bottom-70 parallax">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                            <h2 class="ft-title color-white text-center"> 
+
+{{ input_tweet }}                                
+{{ prediction_text }}
+
+</html>
+
