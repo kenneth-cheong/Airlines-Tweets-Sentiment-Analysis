@@ -16,7 +16,7 @@ Tweets have been identified as the source for passenger comments and both Kaggle
 
 Kaggle Data : https://www.kaggle.com/crowdflower/twitter-airline-sentiment
 
-Twython was used together with the Twitter API to collect more United Airlines related tweets. You can sign up for the the API access a thttps://developer.twitter.com/
+Twython was used together with the Twitter API to collect more United Airlines related tweets. You can sign up for the the API access at https://developer.twitter.com/
 
 ## Data Cleaning
 Unnecessary text such as repeated tweets, '@' and '#' tags, urls, punctuation were removed. 
