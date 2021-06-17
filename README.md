@@ -33,7 +33,7 @@ TextBlob was used to evaluate the sentiments as a second base for comparison. Fu
 The first two approaches that I undertook for topic modelling are LDA and Doc2Vec, the results, read by human eye were not convincing thus manual keyword labelling was applied. 
 
 ### Latent Dirichlet Allocation
-After plotting an Intertopic Distance Map, the spaces between the topics seems significant. However, the tweets categorized bu the models were not indicative of their topic distintictvely. 
+After plotting an Intertopic Distance Map, the spaces between the topics seems significant. However, the tweets categorized bu the models were not indicative of their topic distinctively. 
 
 ### Doc2Vec
 This model returned rather high simliarity scores for a large number of tweets thus, also did not provide a conclusive categorization result. 
