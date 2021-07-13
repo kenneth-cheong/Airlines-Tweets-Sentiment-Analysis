@@ -17,4 +17,5 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: python collect_tweets.py
+        run: |
+              python collect_tweets.py
