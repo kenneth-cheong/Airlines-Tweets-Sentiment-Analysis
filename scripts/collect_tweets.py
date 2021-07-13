@@ -1,4 +1,4 @@
-!pip install twython
+pip install twython
 
 import json
 from twython import Twython
