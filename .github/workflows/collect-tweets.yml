@@ -23,6 +23,10 @@ jobs:
             run: |
               pip install twython
               pip install pandas
+          - name: twitter keys
+            with: 
+                consumer_key:${{ secrets.CONSUMER_KEY }}
+                consumer_secret:${{ secrets.CONSUMER_SECRET }}
               
           - name: execute py script # run the run.py to get the latest data
             run: |
