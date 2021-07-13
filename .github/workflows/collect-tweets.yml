@@ -4,9 +4,7 @@ name: collect-tweets
 
 # Controls when the workflow will run
 on:  
-    schedule:
-    # will run daily at 2359hrs UTC 0
-        - cron:  "36 9 * * *"
+    workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
