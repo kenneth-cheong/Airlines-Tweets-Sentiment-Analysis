@@ -20,7 +20,7 @@ with open("https://drive.google.com/file/d/1hU1g7R_Ub0GdEQdZzeHbk8FAPKl2u3Pa/vie
     creds = json.load(file)
 
 # Instantiate an object
-python_tweets = Twython(creds['CONSUMER_KEY'], creds['CONSUMER_SECRET'])
+python_tweets = Twython(consumer_key, consume_secret)
 
 # Create query
 query = {'q': 'united airlines',  
