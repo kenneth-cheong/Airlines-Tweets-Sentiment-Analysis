@@ -20,8 +20,8 @@ jobs:
           - name: setup python
             uses: actions/setup-python@v2
             env:
-               consumer_key:${{ secrets.CONSUMER_KEY }}
-               consumer_secret:${{ secrets.CONSUMER_SECRET }}
+               consumer_key: ${{ secrets.CONSUMER_KEY }}
+               consumer_secret: ${{ secrets.CONSUMER_SECRET }}
           - name: setup dependencies
             run: |
               pip install twython
