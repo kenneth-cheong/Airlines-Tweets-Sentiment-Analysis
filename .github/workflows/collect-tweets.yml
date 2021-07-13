@@ -21,4 +21,4 @@ jobs:
             uses: actions/setup-python@v2
           - name: execute py script # run the run.py to get the latest data
             run: |
-              python collect_tweets.py
+              python ./scripts/collect_tweets.py
