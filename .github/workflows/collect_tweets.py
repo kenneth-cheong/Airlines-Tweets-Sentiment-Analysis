@@ -1,5 +1,3 @@
-#!pip install twython
-
 import json
 from twython import Twython
 import pandas as pd
