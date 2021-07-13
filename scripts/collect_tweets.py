@@ -16,7 +16,7 @@ import datetime
 
 
 # Load credentials from json file
-with open("twitter_credentials.json", "r") as file:  
+with open("https://drive.google.com/file/d/1hU1g7R_Ub0GdEQdZzeHbk8FAPKl2u3Pa/view?usp=sharing", "r") as file:  
     creds = json.load(file)
 
 # Instantiate an object
