@@ -4,7 +4,7 @@ import pandas as pd
 import datetime
 
 # Instantiate an object
-python_tweets = Twython(consumer_key, consume_secret)
+python_tweets = Twython(consumer_key, consumer_secret)
 
 # Create query
 query = {'q': 'united airlines',  
